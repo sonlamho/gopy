@@ -48,5 +48,43 @@ func TestMap(t *testing.T) {
 		want := []string{"--", "-0-", "-abcd-", "--", "-hjkl-"}
 		checkEq(Map(f, slice), want, t)
 	})
+}
+
+func TestFilter(t *testing.T) {
+
+	t.Run("empty slice", func(t *testing.T) {
+		pred := func(x int) bool { return true }
+		slice := []int{}
+		want := []int{}
+		checkEq(Filter(pred, slice), want, t)
+	})
+
+	t.Run("always false predicate", func(t *testing.T) {
+		pred := func(x int) bool { return false }
+		slice := []int{1, 2, 3, 4, 5, 6}
+		want := []int{}
+		checkEq(Filter(pred, slice), want, t)
+	})
+
+	t.Run("always true predicate", func(t *testing.T) {
+		pred := func(x int) bool { return true }
+		slice := []int{1, 2, 3, 4, 5, 6}
+		want := slice
+		checkEq(Filter(pred, slice), want, t)
+	})
+
+	t.Run("filter even len strings", func(t *testing.T) {
+		pred := func(x string) bool { return len(x)%2 == 0}
+		slice := []string{"a", "", "qwer", "jkl", "jk", "12345"}
+		want := []string{"", "qwer", "jk"}
+		checkEq(Filter(pred, slice), want, t)
+	})
+
+	t.Run("filter high numbers", func(t *testing.T) {
+		pred := func(x float64) bool { return x >= 1000 }
+		slice := []float64{32., 59., -23104., 12039., 1000.1, 999., 0., 9999.9}
+		want := []float64{12039., 1000.1, 9999.9}
+		checkEq(Filter(pred, slice), want, t)
+	})
 
 }
