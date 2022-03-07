@@ -67,8 +67,8 @@ func TestFilter(t *testing.T) {
 	})
 
 	t.Run("always true predicate", func(t *testing.T) {
-		pred := func(x int) bool { return true }
-		slice := []int{1, 2, 3, 4, 5, 6}
+		pred := func(x uint32) bool { return true }
+		slice := []uint32{1, 2, 3, 4, 5, 6}
 		want := slice
 		checkEq(Filter(pred, slice), want, t)
 	})
@@ -81,7 +81,7 @@ func TestFilter(t *testing.T) {
 	})
 
 	t.Run("filter high numbers", func(t *testing.T) {
-		pred := func(x float64) bool { return x >= 1000 }
+		pred := func(x float64) bool { return x > 1000 }
 		slice := []float64{32., 59., -23104., 12039., 1000.1, 999., 0., 9999.9}
 		want := []float64{12039., 1000.1, 9999.9}
 		checkEq(Filter(pred, slice), want, t)
