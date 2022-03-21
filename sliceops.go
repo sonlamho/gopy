@@ -41,3 +41,7 @@ func Reduce[T any, U any, Uslice ~[]U](function func(T, U) T, sequence Uslice, i
 	}
 	return result
 }
+
+func Sum[T Number, NumSlice ~[]T](nums NumSlice) T {
+	return Reduce(func(x T, y T) T {return x+y}, nums, T(0))
+}

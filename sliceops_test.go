@@ -148,3 +148,31 @@ func TestReduce(t *testing.T) {
 	})
 
 }
+
+func TestSum(t *testing.T) {
+
+	t.Run("empty slice", func(t *testing.T) {
+		seq := []int{}
+		want := 0
+		checkEq(Sum(seq), want, t)
+	})
+
+	t.Run("uint32 slice", func(t *testing.T) {
+		seq := []uint32{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}
+		want := uint32(6 * 13)
+		checkEq(Sum(seq), want, t)
+	})
+
+	t.Run("int slice", func(t *testing.T) {
+		seq := []int{-5, -4, -3, -2, -1, 0, 1234567, 0, 5, 4, 3, 2, 1}
+		want := int(1234567)
+		checkEq(Sum(seq), want, t)
+	})
+
+	t.Run("float64 slice", func(t *testing.T) {
+		seq := []float64{1.5, -0.25, 1.0, 0.0, 0.75, 5.25}
+		want := float64(8.25)
+		checkEq(Sum(seq), want, t)
+	})
+
+}
