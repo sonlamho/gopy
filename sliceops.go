@@ -33,3 +33,11 @@ func Filter[T any, C ~[]T](pred func(T) bool, slice C) []T {
 	}
 	return result
 }
+
+func Reduce[T any, U any, Uslice ~[]U](function func(T, U) T, sequence Uslice, initial T) T {
+	result := initial
+	for _, x := range sequence {
+		result = function(result, x)
+	}
+	return result
+}
