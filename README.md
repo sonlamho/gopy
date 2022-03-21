@@ -1,5 +1,15 @@
-# gopy
-makes Go feels more like Python
+
+<h1><p align="center">gopy</p></h1>
+
+<p align="center">
+  <a href="https://github.com/sonlamho/gopy/actions">
+    <img src="https://img.shields.io/github/workflow/status/sonlamho/gopy/Go?style=flat-square" alt="Github Actions">
+  </a>
+  <img src="https://img.shields.io/github/go-mod/go-version/sonlamho/gopy?style=flat-square">
+  <a href="https://github.com/sonlamho/gopy/releases">
+    <img src="https://img.shields.io/github/release/sonlamho/gopy/all.svg?style=flat-square">
+  </a>
+</p>
 
 
 ### Example Usage
