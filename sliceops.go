@@ -10,11 +10,11 @@ type NumLike interface {
 	~int | ~int64 | ~int32 | ~int16 | ~int8 | ~uint | ~uint64 | ~uint32 | ~uint16 | ~uint8 | ~float64 | ~float32
 }
 
-// Map takes a function `f` and a `slice`, calls `f` on all elements of `slice` and returns the results in another slice.
-func Map[T any, U any, C ~[]T](f func(T) U, slice C) []U {
+// Map takes a `function` and a `slice`, calls `function` on all elements of `slice` and returns the results in another slice.
+func Map[T any, U any, C ~[]T](function func(T) U, slice C) []U {
 	result := make([]U, len(slice))
 	for i, x := range slice {
-		result[i] = f(x)
+		result[i] = function(x)
 	}
 	return result
 }
@@ -106,30 +106,30 @@ func VarMax[T Number](nums ...T) T {
 	return Max(nums)
 }
 
-// All returns true if and only if all elements of `slice` is true.
-func All[BoolSlice ~[]bool](slice BoolSlice) bool {
+// All returns true if and only if all elements of `bools` is true.
+func All[BoolSlice ~[]bool](bools BoolSlice) bool {
 	return Reduce(
 		func(a, b bool) bool { return a && b },
-		slice,
+		bools,
 		true,
 	)
 }
 
 // VarAll is the variadic version of All.
-func VarAll(slice ...bool) bool {
-	return All(slice)
+func VarAll(bools ...bool) bool {
+	return All(bools)
 }
 
-// Any returns true if any element of `slice` is true, and returns false otherwise.
-func Any[BoolSlice ~[]bool](slice BoolSlice) bool {
+// Any returns true if any element of `bools` is true, and returns false otherwise.
+func Any[BoolSlice ~[]bool](bools BoolSlice) bool {
 	return Reduce(
 		func(a, b bool) bool { return a || b },
-		slice,
+		bools,
 		false,
 	)
 }
 
 // VarAny is the variadic version of Any.
-func VarAny(slice ...bool) bool {
-	return Any(slice)
+func VarAny(bools ...bool) bool {
+	return Any(bools)
 }
