@@ -189,6 +189,15 @@ func TestReversed(t *testing.T) {
 		checkEqSlice(Reversed(seq), want, t)
 	})
 
+	t.Run("original slice unmodified", func(t *testing.T) {
+		seq := []myInt{1, 2, 3, 4, 5, 6, 7}
+		seqCopy := make([]myInt, len(seq))
+		copy(seqCopy, seq)
+		checkEqSlice(seqCopy, seq, t)
+		Reversed(seq)
+		checkEqSlice(seqCopy, seq, t)
+	})
+
 	t.Run("Reversed vs implementation using Reduce", func(t *testing.T) {
 		fun := func(x []int, y int) []int {
 			prefix := []int{y}
