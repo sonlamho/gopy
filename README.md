@@ -38,7 +38,10 @@ func main() {
 	Print(gopy.Map(add_1half, seq))
 	Print(gopy.Filter(is_even, seq))
 	Print(gopy.Sum(seq))
-
+	Print("---")
+	Print(gopy.Min(seq))  // -> 1
+	Print(gopy.VarMin(100, 50, 9, 42))  // -> 9
+	Print(gopy.VarMin(0.5, 0.7))  // -> 0.5
 }
 ```
 Output:
@@ -47,4 +50,8 @@ Output:
 [1.5 2.5 3.5 4.5 5.5 6.5 7.5 8.5 9.5 10.5]
 [2 4 6 8 10]
 55
+---
+1
+9
+0.5
 ```
