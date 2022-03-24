@@ -20,6 +20,7 @@
 - Basic functional tools: `Map`, `Filter`, `Reduce`
 - Reducing functions: `Sum`, `Min`, `Max`, `All`, `Any`
 - Variadic version of some functions: `VarSum`, `VarMin`, `VarMax`, `VarAll`, `VarAny`
+- Minimal, no bloat, sensible function signatures (following Python), no dependencies, pure Go!
 
 ## Example Usage
 
