@@ -60,17 +60,17 @@ func VarSum[T Number](nums ...T) T {
 func reduceMonoid[T any, Tslice ~[]T](function func(T, T) T, sequence Tslice, val0 T) T {
 	if len(sequence) == 0 {
 		return val0
-	} else {
-		return Reduce(function, sequence, sequence[0])
 	}
+	return Reduce(function, sequence, sequence[0])
+
 }
 
 func min[T Number](x, y T) T {
 	if x < y {
 		return x
-	} else {
-		return y
 	}
+	return y
+
 }
 
 // Min returns the minimum element of `nums`.
@@ -86,9 +86,9 @@ func VarMin[T Number](nums ...T) T {
 func max[T Number](x, y T) T {
 	if x >= y {
 		return x
-	} else {
-		return y
 	}
+	return y
+
 }
 
 // Max returns the maximum element of `nums`.
