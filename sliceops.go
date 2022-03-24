@@ -45,3 +45,51 @@ func Reduce[T any, U any, Uslice ~[]U](function func(T, U) T, sequence Uslice, i
 func Sum[T Number, NumSlice ~[]T](nums NumSlice) T {
 	return Reduce(func(x, y T) T { return x + y }, nums, T(0))
 }
+
+func reduceMonoid[T any, Tslice ~[]T](function func(T, T) T, sequence Tslice, val0 T) T {
+	if len(sequence) == 0 {
+		return val0
+	} else {
+		return Reduce(function, sequence, sequence[0])
+	}
+}
+
+func min[T Number](x, y T) T {
+	if x < y {
+		return x
+	} else {
+		return y
+	}
+}
+
+func Min[T Number, NumSlice ~[]T](nums NumSlice) T {
+	return reduceMonoid(min[T], nums, T(0))
+}
+
+func max[T Number](x, y T) T {
+	if x >= y {
+		return x
+	} else {
+		return y
+	}
+}
+
+func Max[T Number, NumSlice ~[]T](nums NumSlice) T {
+	return reduceMonoid(max[T], nums, T(0))
+}
+
+func All[BoolSlice ~[]bool](slice BoolSlice) bool {
+	return Reduce(
+		func(a, b bool) bool { return a && b },
+		slice,
+		true,
+	)
+}
+
+func Any[BoolSlice ~[]bool](slice BoolSlice) bool {
+	return Reduce(
+		func(a, b bool) bool { return a || b },
+		slice,
+		false,
+	)
+}
