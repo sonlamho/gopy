@@ -12,6 +12,7 @@
   <a href="https://goreportcard.com/report/github.com/sonlamho/gopy">
     <img src="https://goreportcard.com/badge/github.com/sonlamho/gopy#">
   </a>
+  <a href="https://pkg.go.dev/github.com/sonlamho/gopy"><img src="https://pkg.go.dev/badge/github.com/sonlamho/gopy.svg" alt="Go Reference"></a>
 </p>
 
 ## Features
