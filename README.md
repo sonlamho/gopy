@@ -17,10 +17,10 @@
 
 ## Features
 
-- Basic functional tools: `Map`, `Filter`, `Reduce`
+- Basic functional tools: `Map`, `Filter`, `Reduce`, `Reversed`
 - Reducing functions: `Sum`, `Min`, `Max`, `All`, `Any`
 - Variadic version of some functions: `VarSum`, `VarMin`, `VarMax`, `VarAll`, `VarAny`
-- Minimal, no bloat, sensible function signatures (following Python), no dependencies, pure Go!
+- Minimal, no bloat, sensible function signatures (following Python mostly), no dependencies, pure Go!
 
 ## Example Usage
 
