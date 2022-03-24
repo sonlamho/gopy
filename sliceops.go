@@ -46,6 +46,10 @@ func Sum[T Number, NumSlice ~[]T](nums NumSlice) T {
 	return Reduce(func(x, y T) T { return x + y }, nums, T(0))
 }
 
+func VarSum[T Number](nums ...T) T {
+	return Sum(nums)
+}
+
 func reduceMonoid[T any, Tslice ~[]T](function func(T, T) T, sequence Tslice, val0 T) T {
 	if len(sequence) == 0 {
 		return val0
@@ -66,6 +70,10 @@ func Min[T Number, NumSlice ~[]T](nums NumSlice) T {
 	return reduceMonoid(min[T], nums, T(0))
 }
 
+func VarMin[T Number](nums ...T) T {
+	return Min(nums)
+}
+
 func max[T Number](x, y T) T {
 	if x >= y {
 		return x
@@ -78,6 +86,10 @@ func Max[T Number, NumSlice ~[]T](nums NumSlice) T {
 	return reduceMonoid(max[T], nums, T(0))
 }
 
+func VarMax[T Number](nums ...T) T {
+	return Max(nums)
+}
+
 func All[BoolSlice ~[]bool](slice BoolSlice) bool {
 	return Reduce(
 		func(a, b bool) bool { return a && b },
@@ -86,10 +98,18 @@ func All[BoolSlice ~[]bool](slice BoolSlice) bool {
 	)
 }
 
+func VarAll(slice ...bool) bool {
+	return All(slice)
+}
+
 func Any[BoolSlice ~[]bool](slice BoolSlice) bool {
 	return Reduce(
 		func(a, b bool) bool { return a || b },
 		slice,
 		false,
 	)
+}
+
+func VarAny(slice ...bool) bool {
+	return Any(slice)
 }

@@ -2,6 +2,7 @@ package gopy
 
 import (
 	"fmt"
+	"math/rand"
 	"testing"
 )
 
@@ -183,18 +184,21 @@ func TestMin(t *testing.T) {
 		seq := []int{}
 		want := 0
 		checkEq(Min(seq), want, t)
+		checkEq(VarMin(seq...), want, t)
 	})
 
 	t.Run("uint32 slice", func(t *testing.T) {
 		seq := []uint32{100, 50, 9, 423, 10, 12}
 		want := uint32(9)
 		checkEq(Min(seq), want, t)
+		checkEq(VarMin(seq...), want, t)
 	})
 
 	t.Run("float64 slice", func(t *testing.T) {
 		seq := []float64{1.5, -0.25, 1.0, 0.0, 0.75, 5.25, -0.2499}
 		want := float64(-0.25)
 		checkEq(Min(seq), want, t)
+		checkEq(VarMin(seq...), want, t)
 	})
 
 }
@@ -205,18 +209,21 @@ func TestMax(t *testing.T) {
 		seq := []int{}
 		want := 0
 		checkEq(Max(seq), want, t)
+		checkEq(VarMax(seq...), want, t)
 	})
 
 	t.Run("uint32 slice", func(t *testing.T) {
 		seq := []uint32{100, 50, 9, 423, 10, 12}
 		want := uint32(423)
 		checkEq(Max(seq), want, t)
+		checkEq(VarMax(seq...), want, t)
 	})
 
 	t.Run("float64 slice", func(t *testing.T) {
 		seq := []float64{1.5, -0.25, 1.0, 0.0, 0.75, 5.25, -0.2499}
 		want := float64(5.25)
 		checkEq(Max(seq), want, t)
+		checkEq(VarMax(seq...), want, t)
 	})
 
 }
@@ -227,24 +234,28 @@ func TestAll(t *testing.T) {
 		seq := []bool{}
 		want := true
 		checkEq(All(seq), want, t)
+		checkEq(VarAll(seq...), want, t)
 	})
 
 	t.Run("all is true", func(t *testing.T) {
 		seq := []bool{true, true, true, true}
 		want := true
 		checkEq(All(seq), want, t)
+		checkEq(VarAll(seq...), want, t)
 	})
 
 	t.Run("not all 1", func(t *testing.T) {
 		seq := []bool{true, true, true, false, true}
 		want := false
 		checkEq(All(seq), want, t)
+		checkEq(VarAll(seq...), want, t)
 	})
 
 	t.Run("not all 2", func(t *testing.T) {
 		seq := []bool{false, true, true, true, false, true}
 		want := false
 		checkEq(All(seq), want, t)
+		checkEq(VarAll(seq...), want, t)
 	})
 
 }
@@ -255,24 +266,77 @@ func TestAny(t *testing.T) {
 		seq := []bool{}
 		want := false
 		checkEq(Any(seq), want, t)
+		checkEq(VarAny(seq...), want, t)
 	})
 
 	t.Run("any is true 1", func(t *testing.T) {
 		seq := []bool{false, false, false, true, false}
 		want := true
 		checkEq(Any(seq), want, t)
+		checkEq(VarAny(seq...), want, t)
 	})
 
 	t.Run("any is true 2", func(t *testing.T) {
 		seq := []bool{true, false, false, true, false}
 		want := true
 		checkEq(Any(seq), want, t)
+		checkEq(VarAny(seq...), want, t)
 	})
 
 	t.Run("not any", func(t *testing.T) {
 		seq := []bool{false, false, false, false, false, false}
 		want := false
 		checkEq(Any(seq), want, t)
+		checkEq(VarAny(seq...), want, t)
+	})
+
+}
+
+func TestVariadic(t *testing.T) {
+
+	t.Run("no args", func(t *testing.T) {
+		checkEq(VarAny(), false, t)
+		checkEq(VarAll(), true, t)
+		checkEq(VarSum[float64](), 0.0, t)
+		checkEq(VarMin[uint32](), uint32(0), t)
+		checkEq(VarMax[int64](), int64(0), t)
+	})
+
+	t.Run("one arg All Any", func(t *testing.T) {
+		for _, b := range []bool{false, true} {
+			checkEq(VarAll(b), b, t)
+			checkEq(VarAny(b), b, t)
+		}
+
+	})
+
+	t.Run("one arg Sum Min Max", func(t *testing.T) {
+		x := rand.Float64()
+		checkEq(VarSum(x), x, t)
+		checkEq(VarMin(x), x, t)
+		checkEq(VarMax(x), x, t)
+
+		y := rand.Int()
+		checkEq(VarSum(y), y, t)
+		checkEq(VarMin(y), y, t)
+		checkEq(VarMax(y), y, t)
+	})
+
+	t.Run("two args", func(t *testing.T) {
+		checkEq(VarAll(true, false), false, t)
+		checkEq(VarAll(true, true), true, t)
+
+		checkEq(VarAny(false, true), true, t)
+		checkEq(VarAny(false, false), false, t)
+
+		checkEq(VarMax(4, 3), 4, t)
+		checkEq(VarMin(4, 3), 3, t)
+		checkEq(VarSum(4, 3), 7, t)
+
+		checkEq(VarMax(-4.75, -4.25), -4.25, t)
+		checkEq(VarMin(-4.75, -4.25), -4.75, t)
+		checkEq(VarSum(-4.75, -4.25), -9.0, t)
+
 	})
 
 }
