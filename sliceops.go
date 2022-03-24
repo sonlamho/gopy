@@ -52,11 +52,12 @@ func Reduce[T any, U any, Uslice ~[]U](function func(T, U) T, sequence Uslice, i
 	return result
 }
 
+// Reversed returns a reversed copy of `sequence`.
 func Reversed[T any, C ~[]T](sequence C) []T {
 	result := make([]T, len(sequence))
-	last_idx := len(sequence) - 1
+	lastIdx := len(sequence) - 1
 	for i, x := range sequence {
-		result[last_idx-i] = x
+		result[lastIdx-i] = x
 	}
 	return result
 }
