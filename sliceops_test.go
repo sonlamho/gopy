@@ -20,12 +20,23 @@ func checkEq[T comparable](got T, want T, t *testing.T) bool {
 	return true
 }
 
+type myInt int
+type myFloat float64
+type myStr string
+
 func TestMap(t *testing.T) {
 
 	t.Run("int slice", func(t *testing.T) {
 		f := func(x int) int { return x + 1000 }
 		slice := []int{5, 0, 10, 123, -1}
 		want := []int{1005, 1000, 1010, 1123, 999}
+		checkEqSlice(Map(f, slice), want, t)
+	})
+
+	t.Run("myInt slice", func(t *testing.T) {
+		f := func(x myInt) myInt { return x + 1000 }
+		slice := []myInt{5, 0, 10, 123, -1}
+		want := []myInt{1005, 1000, 1010, 1123, 999}
 		checkEqSlice(Map(f, slice), want, t)
 	})
 
@@ -88,6 +99,13 @@ func TestFilter(t *testing.T) {
 		checkEqSlice(Filter(pred, slice), want, t)
 	})
 
+	t.Run("filter even len myStr's", func(t *testing.T) {
+		pred := func(x myStr) bool { return len(x)%2 == 0 }
+		slice := []myStr{"a", "qwer", "jkl;", "jk", "12345"}
+		want := []myStr{"qwer", "jkl;", "jk"}
+		checkEqSlice(Filter(pred, slice), want, t)
+	})
+
 	t.Run("filter high numbers", func(t *testing.T) {
 		pred := func(x float64) bool { return x > 1000 }
 		slice := []float64{32., 59., -23104., 12039., 1000.1, 999., 0., 9999.9}
@@ -124,16 +142,16 @@ func TestReduce(t *testing.T) {
 	})
 
 	t.Run("cummulative sum", func(t *testing.T) {
-		fun := func(x []int, y int) []int {
-			last := 0
+		fun := func(x []myInt, y myInt) []myInt {
+			last := myInt(0)
 			if n := len(x); n > 0 {
 				last = x[n-1]
 			}
 			return append(x, last+y)
 		}
-		seq := []int{10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, -1, -2, -3}
-		init := make([]int, 0, len(seq))
-		want := []int{10, 19, 27, 34, 40, 45, 49, 52, 54, 55, 55, 54, 52, 49}
+		seq := []myInt{10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, -1, -2, -3}
+		init := make([]myInt, 0, len(seq))
+		want := []myInt{10, 19, 27, 34, 40, 45, 49, 52, 54, 55, 55, 54, 52, 49}
 		checkEqSlice(Reduce(fun, seq, init), want, t)
 	})
 
@@ -156,24 +174,35 @@ func TestSum(t *testing.T) {
 		seq := []int{}
 		want := 0
 		checkEq(Sum(seq), want, t)
+		checkEq(VarSum(seq...), want, t)
 	})
 
 	t.Run("uint32 slice", func(t *testing.T) {
 		seq := []uint32{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}
 		want := uint32(6 * 13)
 		checkEq(Sum(seq), want, t)
+		checkEq(VarSum(seq...), want, t)
 	})
 
 	t.Run("int slice", func(t *testing.T) {
 		seq := []int{-5, -4, -3, -2, -1, 0, 1234567, 0, 5, 4, 3, 2, 1}
 		want := int(1234567)
 		checkEq(Sum(seq), want, t)
+		checkEq(VarSum(seq...), want, t)
+	})
+
+	t.Run("myInt slice", func(t *testing.T) {
+		seq := []myInt{-5, -4, -3, -2, -1, 0, 1234567, 0, 5, 4, 3, 2, 1}
+		want := myInt(1234567)
+		checkEq(Sum(seq), want, t)
+		// checkEq(VarSum(seq...), want, t)
 	})
 
 	t.Run("float64 slice", func(t *testing.T) {
 		seq := []float64{1.5, -0.25, 1.0, 0.0, 0.75, 5.25}
 		want := float64(8.25)
 		checkEq(Sum(seq), want, t)
+		checkEq(VarSum(seq...), want, t)
 	})
 
 }
@@ -201,6 +230,13 @@ func TestMin(t *testing.T) {
 		checkEq(VarMin(seq...), want, t)
 	})
 
+	t.Run("myFloat slice", func(t *testing.T) {
+		seq := []myFloat{1.5, -0.25, 1.0, 0.0, 0.75, 5.25, -0.2499}
+		want := myFloat(-0.25)
+		checkEq(Min(seq), want, t)
+		// checkEq(VarMin(seq...), want, t)
+	})
+
 }
 
 func TestMax(t *testing.T) {
@@ -217,6 +253,13 @@ func TestMax(t *testing.T) {
 		want := uint32(423)
 		checkEq(Max(seq), want, t)
 		checkEq(VarMax(seq...), want, t)
+	})
+
+	t.Run("myInt slice", func(t *testing.T) {
+		seq := []myInt{100, 50, 9, 423, 10, 12}
+		want := myInt(423)
+		checkEq(Max(seq), want, t)
+		// checkEq(VarMax(seq...), want, t)
 	})
 
 	t.Run("float64 slice", func(t *testing.T) {

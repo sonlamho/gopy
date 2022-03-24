@@ -5,6 +5,11 @@ type Number interface {
 	int | int64 | int32 | int16 | int8 | uint | uint64 | uint32 | uint16 | uint8 | float64 | float32
 }
 
+// NumLike is a generic interface of all numeric types and custom numeric types in Go.
+type NumLike interface {
+	~int | ~int64 | ~int32 | ~int16 | ~int8 | ~uint | ~uint64 | ~uint32 | ~uint16 | ~uint8 | ~float64 | ~float32
+}
+
 // Map takes a function `f` and a `slice`, calls `f` on all elements of `slice` and returns the results in another slice.
 func Map[T any, U any, C ~[]T](f func(T) U, slice C) []U {
 	result := make([]U, len(slice))
@@ -48,7 +53,7 @@ func Reduce[T any, U any, Uslice ~[]U](function func(T, U) T, sequence Uslice, i
 }
 
 // Sum returns the sum of the collection of numbers.
-func Sum[T Number, NumSlice ~[]T](nums NumSlice) T {
+func Sum[T NumLike, NumSlice ~[]T](nums NumSlice) T {
 	return Reduce(func(x, y T) T { return x + y }, nums, T(0))
 }
 
@@ -65,7 +70,7 @@ func reduceMonoid[T any, Tslice ~[]T](function func(T, T) T, sequence Tslice, va
 
 }
 
-func min[T Number](x, y T) T {
+func min[T NumLike](x, y T) T {
 	if x < y {
 		return x
 	}
@@ -74,7 +79,7 @@ func min[T Number](x, y T) T {
 }
 
 // Min returns the minimum element of `nums`.
-func Min[T Number, NumSlice ~[]T](nums NumSlice) T {
+func Min[T NumLike, NumSlice ~[]T](nums NumSlice) T {
 	return reduceMonoid(min[T], nums, T(0))
 }
 
@@ -83,7 +88,7 @@ func VarMin[T Number](nums ...T) T {
 	return Min(nums)
 }
 
-func max[T Number](x, y T) T {
+func max[T NumLike](x, y T) T {
 	if x >= y {
 		return x
 	}
@@ -92,7 +97,7 @@ func max[T Number](x, y T) T {
 }
 
 // Max returns the maximum element of `nums`.
-func Max[T Number, NumSlice ~[]T](nums NumSlice) T {
+func Max[T NumLike, NumSlice ~[]T](nums NumSlice) T {
 	return reduceMonoid(max[T], nums, T(0))
 }
 
