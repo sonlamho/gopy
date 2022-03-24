@@ -22,6 +22,10 @@
 
 ## Example Usage
 
+Before using `gopy` in your project, get the package: 
+```go get github.com/sonlamho/gopy@latest```
+
+Sample code below:
 ```golang
 package main
 
