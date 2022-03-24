@@ -10,7 +10,7 @@
     <img src="https://img.shields.io/github/release/sonlamho/gopy/all.svg?style=flat-square">
   </a>
   <a href="https://goreportcard.com/report/github.com/sonlamho/gopy">
-    <img src="https://goreportcard.com/badge/github.com/sonlamho/gopy">
+    <img src="https://goreportcard.com/badge/github.com/sonlamho/gopy#">
   </a>
 </p>
 
