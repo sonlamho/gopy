@@ -52,6 +52,15 @@ func Reduce[T any, U any, Uslice ~[]U](function func(T, U) T, sequence Uslice, i
 	return result
 }
 
+func Reversed[T any, C ~[]T](sequence C) []T {
+	result := make([]T, len(sequence))
+	last_idx := len(sequence) - 1
+	for i, x := range sequence {
+		result[last_idx-i] = x
+	}
+	return result
+}
+
 // Sum returns the sum of the collection of numbers.
 func Sum[T NumLike, NumSlice ~[]T](nums NumSlice) T {
 	return Reduce(func(x, y T) T { return x + y }, nums, T(0))

@@ -168,6 +168,40 @@ func TestReduce(t *testing.T) {
 
 }
 
+func TestReversed(t *testing.T) {
+
+	t.Run("empty slice", func(t *testing.T) {
+		seq := []int32{}
+		want := []int32{}
+		checkEqSlice(Reversed(seq), want, t)
+	})
+
+	t.Run("1 element slice", func(t *testing.T) {
+		x := rand.Float64()
+		seq := []float64{x}
+		want := []float64{x}
+		checkEqSlice(Reversed(seq), want, t)
+	})
+
+	t.Run("myInt slice", func(t *testing.T) {
+		seq := []myInt{1, 2, 3, 4, 5, 6, 7}
+		want := []myInt{7, 6, 5, 4, 3, 2, 1}
+		checkEqSlice(Reversed(seq), want, t)
+	})
+
+	t.Run("Reversed vs implementation using Reduce", func(t *testing.T) {
+		fun := func(x []int, y int) []int {
+			prefix := []int{y}
+			return append(prefix, x...)
+		}
+		seq := []int{10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, -1, -2, -3}
+		result0 := Reversed(seq)
+		result1 := Reduce(fun, seq, []int{})
+		checkEqSlice(result0, result1, t)
+	})
+
+}
+
 func TestSum(t *testing.T) {
 
 	t.Run("empty slice", func(t *testing.T) {
