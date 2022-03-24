@@ -19,19 +19,6 @@ func Map[T any, U any, C ~[]T](function func(T) U, slice C) []U {
 	return result
 }
 
-// Eq tests if two slice-like objects contain equal elements.
-func Eq[T comparable, C ~[]T](a, b C) bool {
-	if len(a) != len(b) {
-		return false
-	}
-	for i := 0; i < len(a); i++ {
-		if a[i] != b[i] {
-			return false
-		}
-	}
-	return true
-}
-
 // Filter returns a subset of `slice` containing elements satisfying the predicate `pred`.
 func Filter[T any, C ~[]T](pred func(T) bool, slice C) []T {
 	result := make([]T, 0)

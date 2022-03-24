@@ -3,11 +3,12 @@ package gopy
 import (
 	"fmt"
 	"math/rand"
+	"reflect"
 	"testing"
 )
 
 func checkEqSlice[T comparable, C ~[]T](got C, want C, t *testing.T) bool {
-	if !Eq[T](got, want) {
+	if !reflect.DeepEqual(got, want) {
 		t.Errorf("Result = %s, want %s", fmt.Sprint(got), fmt.Sprint(want))
 	}
 	return true
