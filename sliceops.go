@@ -21,7 +21,7 @@ func Map[T any, U any, C ~[]T](function func(T) U, slice C) []U {
 
 // Filter returns a subset of `slice` containing elements satisfying the predicate `pred`.
 func Filter[T any, C ~[]T](pred func(T) bool, slice C) []T {
-	result := make([]T, 0)
+	result := make([]T, 0, len(slice))
 	for _, x := range slice {
 		if pred(x) {
 			result = append(result, x)
