@@ -30,7 +30,7 @@ func Filter[T any, C ~[]T](pred func(T) bool, slice C) []T {
 	return result
 }
 
-// Reduce does the reductiong `function` over the whole `sequence` and returns the final result.
+// Reduce calls the reducing `function` with intermediate result kept on the left side, and elements of `sequence` on the right side, repeating thru the whole sequence and returns the final result.
 func Reduce[T any, U any, Uslice ~[]U](function func(T, U) T, sequence Uslice, initial T) T {
 	result := initial
 	for _, x := range sequence {
