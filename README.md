@@ -65,3 +65,8 @@ Output:
 9
 0.5
 ```
+
+
+## Future Plan:
+
+- Same operations `Map`, `Filter`, etc. but on iterables instead of slices.
