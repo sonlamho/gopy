@@ -3,7 +3,7 @@
 
 <p align="center">
   <a href="https://github.com/sonlamho/gopy/actions">
-    <img src="https://img.shields.io/github/workflow/status/sonlamho/gopy/Go?style=flat-square" alt="Github Actions">
+    <img src="https://img.shields.io/github/actions/workflow/status/sonlamho/gopy/go.yml?branch=master" alt="Github Actions">
   </a>
   <img src="https://img.shields.io/github/go-mod/go-version/sonlamho/gopy?style=flat-square">
   <a href="https://github.com/sonlamho/gopy/releases">
